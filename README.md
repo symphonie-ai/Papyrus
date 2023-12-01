@@ -1,63 +1,58 @@
-# Papyrus
+## Papyrus
 
->This project is based on [hugo-PaperMod](https://github.com/adityatelange/hugo-PaperMod) which is a fork of [hugo-paper](https://github.com/nanxiaobei/hugo-paper). The goal of the project is to make a replica theme that works under Pelican site generator.
-
-A fast and responsive theme built for the [Pelican](https://blog.getpelican.com/) site generator. It is styled using [Tailwind CSS](https://tailwindcss.com/). It supports dark mode and built in search function. 
-
-### Demo
-Live-Demo at [https://aleylara.github.io/Papyrus](https://aleylara.github.io/Papyrus)
+Papyrus is a fast and responsive theme built for the [Pelican][] site generator. It is styled using [Tailwind CSS][]. It supports dark mode as well as site search via a plugin.
 
 ### Installation
-The theme requires the [pelican-search](https://github.com/pelican-plugins/search), [pelican-neighbors](https://github.com/pelican-plugins/neighbors), [pelican-readtime](https://github.com/JenkinsDev/pelican-readtime) and [pelican-toc](https://github.com/ingwinlu/pelican-toc) plugins. First three plugins can be installed using `pip`. Pelican-toc will be installed manually. We will also need [stork](https://stork-search.net/) and `beautifulsoup4` as dependencies.
+
+This theme requires the [pelican-search](https://github.com/pelican-plugins/search), [pelican-neighbors](https://github.com/pelican-plugins/neighbors), [pelican-readtime](https://github.com/JenkinsDev/pelican-readtime), and [pelican-toc](https://github.com/ingwinlu/pelican-toc) plugins. The first three plugins can be installed using Pip. Pelican-ToC will be installed manually. We will also need [Stork][] and `beautifulsoup4` as dependencies.
 
 ```bash
 $ pip install pelican-search
 $ pip install pelican-neighbors
 $ pip install pelican-readtime
 ```
-Create two directories `themes` and `pelican-plugins` inside the root level of your project. Clone the Papyrus theme inside the `themes` directory that you created.
 
-```bash 
-$ mkdir themes
-$ cd themes
-$ git clone https://github.com/aleylara/Papyrus.git
-```
-
-Now clone the pelican-toc plugin repo (not available via pip) into your pelican-plugins directory and install `beautifulsoup4` that is required by this plugin.
+Create two directories, `themes` and `pelican-plugins`, inside the root level of your project. Clone the Papyrus theme inside the `themes` directory that you created.
 
 ```bash
-$ mkdir pelican-plugins
-$ cd pelican-plugins
-$ git clone https://github.com/ingwinlu/pelican-toc.git
+$ cd myBlog
+$ mkdir themes pelican-plugins
+$ git clone https://github.com/pelican-themes/papyrus.git themes/papyrus
+```
+
+Now clone the `pelican-toc` plugin repo (not available via Pip) into your `pelican-plugins` directory and install `beautifulsoup4`, which is required by this plugin.
+
+```bash
+$ git clone https://github.com/ingwinlu/pelican-toc.git pelican-plugins/pelican-toc
 $ pip install beautifulsoup4
 ```
-Papyrus theme is already setup for your search functionality. However you will still need to have the `stork` package installed in your operating system. Verify [stork](https://stork-search.net/) is in your path by `stork -h` otherwise go ahead and install it.
+
+Papyrus is designed to support search functionality. However, you will still need to have [Stork][] installed on the system that will generate your site. Verify the `stork` CLI tool is availability on your `$PATH` by running `stork -h`, and if not, go ahead and install it.
 
 ```bash
-# Install using Homebrew
+# Install Stork using Homebrew
 $ brew install stork-search/stork-tap/stork
 
-# Install using the Rust toolchain and install Stork with Cargo 
+# If you already have the Rust toolchain, you can install Stork with Cargo
 $ cargo install stork-search --locked
 ```
 
 ### Settings
-This is the `pelicanconf.py` settings file for the demo site, please change values to meet your needs.
+
+Following is an example `pelicanconf.py` settings file. Please change the values to meet your needs.
 
 ```python
 AUTHOR = 'Author'
 SITENAME = 'Papyrus'
-SITEURL = 'https://aleylara.github.io/Papyrus/'
+SITEURL = 'http://127.0.0.1:8000/'
 TIMEZONE = 'Australia/Sydney'
 DEFAULT_LANG = 'en'
 
 SUBTITLE = 'Papyrus'
-SUBTEXT = '''A fast and responsive theme built for the <a class="underline" 
-href="https://blog.getpelican.com/">Pelican</a> site generator.<br>
-The theme is inspired from <a class="underline" 
-href="https://github.com/adityatelange/hugo-PaperMod">Hugo-PaperMod</a>. 
-It is styled using <a class="underline" 
-href="https://tailwindcss.com/">Tailwind CSS</a>. 
+SUBTEXT = '''A fast and responsive theme built for the
+<a href="https://blog.getpelican.com/">Pelican</a> site generator.<br>
+The theme is inspired by <a href="https://github.com/adityatelange/hugo-PaperMod">Hugo-PaperMod</a>.
+It is styled using <a href="https://tailwindcss.com/">Tailwind CSS</a>.
 It supports dark mode and built in search function.
 '''
 COPYRIGHT = '©2022'
@@ -66,10 +61,18 @@ THEME = 'themes/Papyrus'
 THEME_STATIC_PATHS = ['static']
 PLUGIN_PATHS = ['pelican-plugins']
 PLUGINS = ['readtime', 'search', 'neighbors', 'pelican-toc']
-
+STATIC_PATHS = [
+    'images',
+    'images/favicon.ico',
+    'extra/robots.txt',
+    ]
+EXTRA_PATH_METADATA = {
+    'extra/robots.txt': {'path': 'robots.txt'},
+    'images/favicon.ico': {'path': 'favicon.ico'},
+    }
 DISPLAY_PAGES_ON_MENU = True
 DIRECT_TEMPLATES = (('index', 'search', 'tags', 'categories', 'archives',))
-PAGINATED_TEMPLATES = {'index':None,'tag':None,'category':None,'author':None,'archives':24,}
+PAGINATED_TEMPLATES = {'index': None, 'tag': None, 'category': None, 'author': None, 'archives': 24,}
 
 # Site search plugin
 SEARCH_MODE = "output"
@@ -95,7 +98,7 @@ RSS_FEED_SUMMARY_ONLY = True
 
 # Social widgets
 SOCIAL = (
-    ('github', 'https://github.com/aleylara/Papyrus'),
+    ('github', 'https://github.com/aleylara/Papyrus/'),
     ('twitter', 'https://twitter.com/'),
 )
 
@@ -119,7 +122,8 @@ DEFAULT_PAGINATION = 8
 ```
 
 ### Generate Articles
-A sample article header is below. Adding a `Summary` field is highly recommended. It substitutes as the article decription and gets added into html `<meta name="description" content="...">`. Summaries are also used in blog's home page. They help to keep similar height article previews without titles, images or code blocks.
+
+A sample article header follows below. Adding a `Summary` field is highly recommended. It substitutes as the article description and gets added to the HTML as `<meta name="description" content="...">`. Summaries are also used on the blog's home page. They help to keep similar height article previews without titles, images, or code blocks.
 
 ```markdown
 Title: Installation
@@ -129,32 +133,35 @@ Category: Software
 Summary: Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam dignissim convallis est. Quisque aliquam. Donec faucibus. Nunc iaculis suscipit dui. Nam sit amet sem. Aliquam libero nisi, imperdiet at, tincidunt nec, gravida vehicula, nisl.
 ```
 
-Articles created inside directory named `pages` will have a separate static page and a direct link similar to the `About` page in the demo.
+Source content files created inside the directory named `pages` will have a separate static page and a direct link, such an `About` page.
 
-You can now run the development server and visit the `http://localhost:8000`
+You can now run the development server and visit: `http://127.0.0.1:8000/`
 
 ```bash
 cd myBlog
 $ pelican --autoreload --listen --ignore-cache
 ```
 
-Final project directory structure should look similar to this. 
+Final project directory structure should look similar to this.
 
 ```bash
 $ (pelican) ➜ myProject tree
 ├── myBlog
 │   ├── content
-│   │   ├── images
-│   │   │   └── camera.png
-│   │   ├── pages
-│   │   │   ├── about.md
-│   │   │   └── events.md
-│   │   ├── Hardware
-│   │   │   ├── article-one.md
-│   │   │   └── article-two.md
-│   │   └── Software
-│   │       ├── article-three.md
-│   │       └── article-four.md
+│   │    ├── extra
+│   │    │    └── robots.txt
+│   │    ├── images
+│   │    │   ├── favicon.ico
+│   │    │   └── camera.png
+│   │    ├── pages
+│   │    │   ├── about.md
+│   │    │   └── events.md
+│   │    ├── Hardware
+│   │    │   ├── article-one.md
+│   │    │   └── article-two.md
+│   │    └── Software
+│   │        ├── article-three.md
+│   │        └── article-four.md
 │   ├── Makefile
 │   ├── output
 │   │
@@ -167,15 +174,15 @@ $ (pelican) ➜ myProject tree
 │   └── themes
 │       └── Papyrus
 └── venv
-
 ```
 
-### Image size and placement
-Images can be placed on page by adding a custom class names such as `image-left`, `image-right`, `image-center` in your markdown.
+### Image Size and Placement
 
-Similarly, placed images can be given a size using custom classes `image-thumbnail`, `image-small`, `image-medium` and`image-large`.
+Images can be placed on the page by adding custom class names such as `image-left`, `image-right`, `image-center` in your Markdown content.
 
-You can use `<img/>` tags along with the custom image classes straight in your Markdown.
+Similarly, placed images can be given a size using custom classes: `image-thumbnail`, `image-small`, `image-medium`, and`image-large`
+
+You can use `<img/>` tags along with the custom image classes straight in your Markdown content.
 
 ```html
 <img src="{static}/images/screenshot.png" alt="screenshot" class="image-left image-medium" />
@@ -185,25 +192,54 @@ Alternatively you could use inline styling.
 <img src="{static}/images/screenshot.png" alt="screenshot" style="width:200px;" />
 ```
 
-### Embeding YouTube Videos
-In order to have a responsiveness video tumbnail, the `<iframe>` tags must be wrapped inside the `<div class="aspect-w-16 aspect-h-9"></div>` in your markdown file.
+### Embedding YouTube Videos
+
+In order to have a responsive video thumbnail, the `<iframe>` tags must be wrapped inside the `<div class="aspect-w-16 aspect-h-9"></div>` in your Markdown content.
 
 ```html
 <div class="aspect-w-16 aspect-h-9">
-    <iframe width="736" height="414" src="https://www.youtube.com/embed/TmWIrBPE6Bc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    <iframe width="736" height="414" src="https://www.youtube-nocookie.com/embed/TmWIrBPE6Bc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
     </iframe>
 </div>
 ```
 
 ### Tailwind CSS
-If you would like to make any local changes, tailwindcss configuration files are included with the theme. First go into the Papyrus directory and install missing packages with `npm install`.
-Then run the development server that watches for your changed tailwind classes inside the templates folder and updates `main.css` on the go.
+
+If you would like to make any local theme customizations, [Tailwind CSS][] configuration files are included with the theme. First go into the Papyrus directory and install development packages via: `npm install`
+
+Then run the development server that watches for your changed Tailwind classes inside the templates folder and updates `main.css` on the go.
 
 ```bash
 # Initial installation of packages
+$ cd themes/papyrus
 $ npm install
 
 # JIT compiled main.css
 $ npm run dev
 ```
 
+### Performance and SEO Improvements
+
+![Performance](lighthouse.png "Lighthouse Report")
+
+The settings file now has placeholders for your `robots.txt` and `favicon.ico` files.
+Please note these files are **not** included. You must create and add them yourself.
+
+```bash
+├── content
+│    ├── extra
+│    │    └── robots.txt
+│    ├── images
+│    │   ├── favicon.ico
+│    │   └── camera.png
+```
+If you are updating from an older version of this theme, please be sure to update your `pelicanconf.py` with the `EXTRA_PATH_METADATA` and `STATIC_PATHS` directives, as seen in the sample settings above.
+
+### Gratitude
+
+This project is based on [hugo-PaperMod](https://github.com/adityatelange/hugo-PaperMod) which is a fork of [hugo-paper](https://github.com/nanxiaobei/hugo-paper).
+
+
+[Pelican]: https://getpelican.com
+[Tailwind CSS]: https://tailwindcss.com
+[Stork]: https://stork-search.net
